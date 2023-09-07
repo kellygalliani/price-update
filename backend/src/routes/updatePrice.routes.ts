@@ -6,9 +6,12 @@ import multer from "multer";
 const upload = multer(multerConfig);
 const updatePriceRoute = Router();
 
+updatePriceRoute.get("", (req, res) => {
+  updatePriceController.get(req, res);
+});
+
 updatePriceRoute.post("/import", upload.single("file"), (req, res) => {
-  res.json("ok");
-  /* updatePriceController.import(req, res); */
+  updatePriceController.import(req, res);
 });
 
 /* updatePriceRoute.get("/export", (req, res) =>
