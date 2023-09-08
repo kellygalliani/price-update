@@ -139,7 +139,6 @@ export class UpdatepriceService {
         100;
 
       if (priceDifference < -10 || priceDifference > 10) {
-        console.log('AQUI');
         errors.push({
           productCode: product.product_code,
           errorDescription: `O novo preço do produto ${
