@@ -1,7 +1,7 @@
 <h2 align="center"> 
 	 Shopper - Atualização de Preços em Massa 🚀
 </h2>
-
+<div align="center"><img width="1000" src="(image.png)"/></div>
 <p align="center">
  <a href="#-sobre-o-projeto">Sobre</a> •
  <a href="#-funcionalidades">Funcionalidades</a> •
