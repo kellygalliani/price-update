@@ -62,13 +62,7 @@ export class UpdatepriceService {
     const products = await this.loadProducts(file);
     products.shift();
 
-    const errors = {
-      productNotFound: [],
-      invalidPrice: [],
-      missingProductPrice: [],
-      priceBelowCost: [],
-      priceOutOfRange: [],
-    };
+    const errors = [];
 
     const updatedProducts = [];
 
@@ -78,15 +72,17 @@ export class UpdatepriceService {
       });
 
       if (!dbProduct) {
-        errors.productNotFound.push(
-          `Product with code ${product.product_code} not found`,
-        );
+        errors.push({
+          productCode: product.product_code,
+          errorDescription: `Produto com código ${product.product_code} não encontrado`,
+        });
       }
 
       if (isNaN(product.new_price)) {
-        errors.invalidPrice.push(
-          `Invalid price value for product ${product.product_code}`,
-        );
+        errors.push({
+          productCode: product.product_code,
+          errorDescription: `Valor de preço inválido para o produto ${product.product_code}`,
+        });
       }
 
       const packs = await this.prisma.pack.findMany({
@@ -108,9 +104,10 @@ export class UpdatepriceService {
             );
 
             if (!updatedPack) {
-              errors.missingProductPrice.push(
-                `'${dbProduct.code}' is a package, and the price for the individual products should be provided - missing product price '${pack.product_id}'`,
-              );
+              errors.push({
+                productCode: dbProduct.code,
+                errorDescription: `Este produto é um pacote - preço do produto avulso '${pack.product_id}' está ausente `,
+              });
             }
           }
         }
@@ -121,18 +118,20 @@ export class UpdatepriceService {
             );
 
             if (!updatedPack) {
-              errors.priceBelowCost.push(
-                `This product ${pack.product_id} is part of a pack ${pack.pack_id}. The pack's price must be provided.`,
-              );
+              errors.push({
+                productCode: pack.product_id,
+                errorDescription: `Este produto faz parte do pacote ${pack.pack_id}. O preço do pacote deve ser fornecido.`,
+              });
             }
           }
         }
       }
 
       if (Number(product.new_price) < Number(dbProduct.costPrice)) {
-        errors.priceBelowCost.push(
-          `New price for product ${product.product_code} is below the cost price`,
-        );
+        errors.push({
+          productCode: product.product_code,
+          errorDescription: `O novo preço do produto ${product.product_code} está abaixo do preço de custo`,
+        });
       }
 
       const priceDifference =
@@ -140,16 +139,18 @@ export class UpdatepriceService {
         100;
 
       if (priceDifference < -10 || priceDifference > 10) {
-        errors.priceOutOfRange.push(
-          `New price for product ${product.product_code} is ${Math.abs(
-            priceDifference,
-          ).toFixed(2)}% ${
-            priceDifference < -10 ? 'below' : 'above'
-          } the current price`,
-        );
+        console.log('AQUI');
+        errors.push({
+          productCode: product.product_code,
+          errorDescription: `O novo preço do produto ${
+            product.product_code
+          } está ${Math.abs(priceDifference).toFixed(2)}% ${
+            priceDifference < -10 ? 'abaixo' : 'acima'
+          } do preço atual`,
+        });
       }
 
-      if (Object.values(errors).some((errorArray) => errorArray.length > 0)) {
+      if (errors.length > 0) {
         continue;
       }
 
@@ -167,8 +168,9 @@ export class UpdatepriceService {
         'Novo Preço': product.new_price,
       });
     }
+    console.log(errors.length);
 
-    if (Object.values(errors).some((errorArray) => errorArray.length > 0)) {
+    if (errors.length > 0) {
       throw new BadRequestException({ errors });
     }
     return updatedProducts;
