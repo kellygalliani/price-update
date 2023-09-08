@@ -1,28 +1,6 @@
-<p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/diegoguilhermeDS/glb-explore?color=%2304D361">
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/diegoguilhermeDS/glb-explore">
-
-  <a href="https://github.com/diegoguilhermeDS/glb-explore/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/diegoguilhermeDS/glb-explore">
-  </a>
-  
-  <a href="https://github.com/diegoguilhermeDS/glb-explore/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
-  </a>
-   
-   <a href="https://github.com/diegoguilhermeDS/glb-explore/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/diegoguilhermeDS/glb-explore?style=social">
-  </a>
-
-  <a href="https://github.com/diegoguilhermeDS">
-    <img alt="Feito por Kelly Cristina" src="https://img.shields.io/badge/feito%20por-DiegoGuilherme-%237519C1">
-  </a>
-</p>
-
-<h4 align="center"> 
+<h2 align="center"> 
 	 Shopper - Atualização de Preços em Massa 🚀
-</h4>
+</h2>
 
 <p align="center">
  <a href="#-sobre-o-projeto">Sobre</a> •
