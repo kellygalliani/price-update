@@ -1,12 +1,5 @@
 import FileUpload from "./components/FileUpload";
 
-/* const user = {
-  name: "Joana",
-  email: "joana@shopper.com",
-  imageUrl:
-    "https://ibb.co/zVwLYX3",
-}; */
-
 export default function App() {
   return (
     <>
